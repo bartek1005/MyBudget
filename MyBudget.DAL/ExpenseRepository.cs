@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using MyBudget.Model;
 
@@ -25,6 +26,19 @@ namespace MyBudget.DAL
             throw new NotImplementedException();
         }
 
+        public ObservableCollection<Expense> FilterExpenses(IList<Expense> expenses, string searchInput, ExpenseType selectedExpenseType)
+        {
+            ObservableCollection<Expense> Expenses = new ObservableCollection<Expense>(expenses);
+
+            if (selectedExpenseType != ExpenseType.None)
+                Expenses = new ObservableCollection<Expense>(Expenses.Where(e => e.Type == selectedExpenseType));
+
+            if (!string.IsNullOrWhiteSpace(searchInput))
+                Expenses = new ObservableCollection<Expense>(Expenses.Where(e => e.ProductName.ToLower().Contains(searchInput.ToLower())));
+
+            return Expenses;
+
+        }
         public List<Expense> GetExpenses()
         {
             if (expenses == null)
@@ -51,6 +65,11 @@ namespace MyBudget.DAL
             return expenses.Where(d => d.ExpenseDateTime >= startDate && d.ExpenseDateTime <= endDate).ToList();
         }
 
+        public List<ExpenseType> GetExpenseTypes()
+        {
+            return expenses.Select(t => t.Type).Distinct().ToList();
+        }
+
         public void UpdateExpense(Expense expense)
         {
             throw new NotImplementedException();
@@ -67,7 +86,7 @@ namespace MyBudget.DAL
                    Price = 10.10,
                    Country = Country.USA,
                    Type = ExpenseType.Lunch,
-                   Rate = 4
+                   Rate = 5
                 },
                 new Expense()
                 {
@@ -76,7 +95,7 @@ namespace MyBudget.DAL
                    Price = 10.62,
                    Country = Country.USA,
                    Type = ExpenseType.Lunch,
-                   Rate = 3
+                   Rate = 5
                 },
                 new Expense()
                 {
@@ -85,7 +104,7 @@ namespace MyBudget.DAL
                    Price = 2.16,
                    Country = Country.USA,
                    Type = ExpenseType.Fruit,
-                   Rate = 5
+                   Rate = 6
                 },
                 new Expense()
                 {
@@ -94,7 +113,7 @@ namespace MyBudget.DAL
                    Price = 1.12,
                    Country = Country.USA,
                    Type = ExpenseType.Fruit,
-                   Rate = 3,
+                   Rate = 4,
                 },
                 new Expense()
                 {
@@ -103,7 +122,7 @@ namespace MyBudget.DAL
                    Price = 2.98*1.06,
                    Country = Country.USA,
                    Type = ExpenseType.Food,
-                   Rate = 2,
+                   Rate = 3,
                 },
                 new Expense()
                 {
@@ -112,7 +131,7 @@ namespace MyBudget.DAL
                    Price = 0.64*1.06,
                    Country = Country.USA,
                    Type = ExpenseType.Food,
-                   Rate = 3
+                   Rate = 4
                 },
                 new Expense()
                 {
@@ -121,7 +140,7 @@ namespace MyBudget.DAL
                    Price = 2.44*1.06,
                    Country = Country.USA,
                    Type = ExpenseType.Food,
-                   Rate = 4
+                   Rate = 5
                 },
                 new Expense()
                 {
@@ -130,7 +149,7 @@ namespace MyBudget.DAL
                     Price = 1.06,
                     Country = Country.USA,
                     Type = ExpenseType.Chips,
-                    Rate = 3
+                    Rate = 4
                 },
                 new Expense()
                 {
@@ -139,7 +158,7 @@ namespace MyBudget.DAL
                     Price = 3.77*1.06,
                     Country=Country.USA,
                     Type = ExpenseType.Food,
-                    Rate = 5
+                    Rate = 6
                 }
             };
         }

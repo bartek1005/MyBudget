@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ExpenseListViewModel.cs" />
     <Compile Include="View\ExpenseListView.xaml.cs">

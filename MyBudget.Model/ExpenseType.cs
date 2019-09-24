@@ -2,14 +2,15 @@
 {
     public enum ExpenseType : int
     {
-        Food = 0,
-        Drink = 1,
-        Lunch = 2,
-        Beer = 3,
-        Candy = 4,
-        Electronics = 5,
-        Hobby  = 6,
-        Fruit = 7,
-        Chips = 8
+        None = 0,
+        Food = 1,
+        Drink = 2,
+        Lunch = 3,
+        Beer = 4,
+        Candy = 5,
+        Electronics = 6,
+        Hobby  = 7,
+        Fruit = 8,
+        Chips = 9
     }
 }

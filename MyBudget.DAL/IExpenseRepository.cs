@@ -1,6 +1,7 @@
 ﻿using MyBudget.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace MyBudget.DAL
@@ -14,5 +15,8 @@ namespace MyBudget.DAL
         List<Expense> GetExpensesByType(string expenseType);
         List<Expense> GetExpensesByCountry(string countryName);
         List<Expense> GetExpensesFromTo(DateTime startDate, DateTime endDate);
+        List<ExpenseType> GetExpenseTypes();
+        ObservableCollection<Expense> FilterExpenses(IList<Expense> expenses, string searchInput, ExpenseType expenseType);
+
     }
 }

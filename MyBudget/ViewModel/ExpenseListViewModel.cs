@@ -16,6 +16,10 @@ namespace MyBudget.ViewModel
         private ObservableCollection<Expense> expenses;
         private string searchInput;
         private IExpenseRepository expenseRepository;
+
+        private ExpenseType selectedExpenseType;
+        public readonly ExpenseType defaultExpenseType = ExpenseType.None;
+
         public ExpenseListViewModel()
         {
             expenseRepository = new ExpenseRepository();
@@ -41,17 +45,38 @@ namespace MyBudget.ViewModel
             set
             {
                 searchInput = value;
-                FilterExpenses(searchInput);
+                FilterExpenses();
             }
         }
 
-        private void FilterExpenses(string searchInput)
+
+
+        public ObservableCollection<ExpenseType> ExpenseTypes
         {
-            if (string.IsNullOrWhiteSpace(searchInput))
-                Expenses = new ObservableCollection<Expense>(allExpenses);
-            else
-                Expenses = new ObservableCollection<Expense>(allExpenses.Where(e => e.ProductName.ToLower().Contains(searchInput.ToLower())));
+            get
+            {
+                ObservableCollection<ExpenseType> obs = new ObservableCollection<ExpenseType>(expenses.Select(t => t.Type).Distinct());
+                if (!obs.Contains(defaultExpenseType))
+                    obs.Add(defaultExpenseType);
+                return obs;
+            }
         }
+
+        public ExpenseType SelectedExpenseType
+        {
+            get
+            {
+                return selectedExpenseType;
+            }
+            set
+            {
+                selectedExpenseType = value;
+                FilterExpenses();
+            }
+        }
+
+
+
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +90,11 @@ namespace MyBudget.ViewModel
         {
             allExpenses = expenseRepository.GetExpenses();
             Expenses = new ObservableCollection<Expense>(allExpenses);
+        }
 
+        private void FilterExpenses()
+        {
+            Expenses = expenseRepository.FilterExpenses(allExpenses, searchInput, selectedExpenseType);
         }
     }
 }

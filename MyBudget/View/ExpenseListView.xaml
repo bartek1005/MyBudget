@@ -10,10 +10,29 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Text="{Binding SearchInput, UpdateSourceTrigger=PropertyChanged}"/>
-        <DataGrid Grid.Row="1" ItemsSource="{Binding Expenses}"
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="ProductName:" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+            <TextBox Grid.Column="1" Margin="5" Text="{Binding SearchInput, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Content="ProductType" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+            <ComboBox Grid.Column="1" Margin="5"
+                      ItemsSource="{Binding ExpenseTypes}"
+                      SelectedValue="{Binding SelectedExpenseType}"/>
+        </Grid>
+        <DataGrid Grid.Row="3" ItemsSource="{Binding Expenses}"
                   AutoGenerateColumns="True"/>
     </Grid>
 </Window>
