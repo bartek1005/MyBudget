@@ -12,13 +12,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace MyBudget.View
 {
     /// <summary>
     /// Interaction logic for ExpenseListView.xaml
     /// </summary>
-    public partial class ExpenseListView : Window
+    public partial class ExpenseListView : MetroWindow
     {
         public ExpenseListView()
         {

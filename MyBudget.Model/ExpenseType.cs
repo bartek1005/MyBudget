@@ -2,7 +2,7 @@
 {
     public enum ExpenseType : int
     {
-        None = 0,
+        All = 0,
         Food = 1,
         Drink = 2,
         Lunch = 3,

@@ -30,7 +30,7 @@ namespace MyBudget.DAL
         {
             ObservableCollection<Expense> Expenses = new ObservableCollection<Expense>(expenses);
 
-            if (selectedExpenseType != ExpenseType.None)
+            if (selectedExpenseType != ExpenseType.All)
                 Expenses = new ObservableCollection<Expense>(Expenses.Where(e => e.Type == selectedExpenseType));
 
             if (!string.IsNullOrWhiteSpace(searchInput))

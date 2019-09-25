@@ -18,7 +18,7 @@ namespace MyBudget.ViewModel
         private IExpenseRepository expenseRepository;
 
         private ExpenseType selectedExpenseType;
-        public readonly ExpenseType defaultExpenseType = ExpenseType.None;
+        public readonly ExpenseType defaultExpenseType = ExpenseType.All;
 
         public ExpenseListViewModel()
         {
@@ -55,10 +55,10 @@ namespace MyBudget.ViewModel
         {
             get
             {
-                ObservableCollection<ExpenseType> obs = new ObservableCollection<ExpenseType>(expenses.Select(t => t.Type).Distinct());
-                if (!obs.Contains(defaultExpenseType))
-                    obs.Add(defaultExpenseType);
-                return obs;
+                IList<ExpenseType> exp = expenses.Select(t => t.Type).Distinct().ToList();
+                if (!exp.Contains(defaultExpenseType))
+                    exp.Add(defaultExpenseType);
+                return new ObservableCollection<ExpenseType>(exp.OrderBy(s => s.ToString()));
             }
         }
 
