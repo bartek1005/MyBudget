@@ -13,8 +13,7 @@ namespace MyBudget.Model
 
         public Expense()
         {
-            int nextId = GetId();
-            Id = nextId;
+            Id = GetId();
         }
 
         public int Id { get; private set; }

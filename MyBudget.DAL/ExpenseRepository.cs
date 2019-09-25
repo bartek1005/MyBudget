@@ -159,6 +159,24 @@ namespace MyBudget.DAL
                     Country=Country.USA,
                     Type = ExpenseType.Food,
                     Rate = 6
+                },
+                new Expense()
+                {
+                    ExpenseDateTime = DateTime.Parse("2019-09-24 18:35"),
+                    ProductName="TEST",
+                    Price = 11.254,
+                    Country=Country.Poland,
+                    Type = ExpenseType.Food,
+                    Rate = 6
+                },
+                new Expense()
+                {
+                    ExpenseDateTime = DateTime.Parse("2019-09-24 20:11"),
+                    ProductName="TEST2",
+                    Price = 0.23123,
+                    Country=Country.Slovakia,
+                    Type = ExpenseType.Food,
+                    Rate = 0
                 }
             };
         }

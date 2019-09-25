@@ -4,9 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyBudget.View"
+        xmlns:conv="clr-namespace:MyBudget.Converter"
         mc:Ignorable="d"
         Title="ExpenseListView" Height="450" Width="800"
         DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=ExpenseListViewModel}">
+    <Window.Resources>
+        <conv:PriceConverter x:Key="priceConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -29,10 +33,36 @@
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0" Content="ProductType" HorizontalAlignment="Right" Margin="0,0,5,0"/>
             <ComboBox Grid.Column="1" Margin="5"
-                      ItemsSource="{Binding ExpenseTypes}"
+                      ItemsSource="{Binding ExpenseTypes, Mode=OneWay}" 
                       SelectedValue="{Binding SelectedExpenseType}"/>
         </Grid>
-        <DataGrid Grid.Row="3" ItemsSource="{Binding Expenses}"
-                  AutoGenerateColumns="True"/>
+        <DataGrid Grid.Row="3" ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
+                <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
+                <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*"/>
+                <DataGridTextColumn Header="Price" Width="*">
+                    <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
+                    <DataGridTextColumn.Binding>
+                        <MultiBinding Converter="{StaticResource priceConverter}">
+                            <MultiBinding.Bindings>
+                                <Binding Path="Price"/>
+                                <Binding Path="Country"/>
+                            </MultiBinding.Bindings>
+                        </MultiBinding>
+                    </DataGridTextColumn.Binding>
+                </DataGridTextColumn>
+
+                <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="*"/>
+                <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
+                <DataGridTemplateColumn Header="Flag" IsReadOnly="True" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Country,Converter={StaticResource countryFlagConverter}}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

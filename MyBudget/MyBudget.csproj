@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converter\CountryFlagConverter.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ExpenseListViewModel.cs" />
@@ -104,7 +105,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MyBudget.DAL\MyBudget.DAL.csproj">
       <Project>{67FBC9FF-96DF-42AF-AC59-369508B69E42}</Project>
@@ -114,6 +114,11 @@
       <Project>{793E5F07-363C-4026-90A9-390DE93FCE16}</Project>
       <Name>MyBudget.Model</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Poland.png" />
+    <Resource Include="Images\Slovakia.png" />
+    <Resource Include="Images\USA.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
