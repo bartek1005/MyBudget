@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using MyBudget.Model;
 
@@ -13,8 +14,6 @@ namespace MyBudget.DAL
         {
 
         }
-
-
 
         public void AddExpense(Expense expense)
         {
@@ -70,9 +69,43 @@ namespace MyBudget.DAL
             return expenses.Select(t => t.Type).Distinct().ToList();
         }
 
+
+
         public void UpdateExpense(Expense expense)
         {
             throw new NotImplementedException();
+        }
+
+        private double ConvertPriceToPLN(double price, Country country)
+        {
+            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.LCID));
+            var currentRegion = regions.FirstOrDefault(region => region.EnglishName.Contains(country.ToString()) || region.ThreeLetterISORegionName.Contains(country.ToString()));
+            string currencyName = currentRegion.ISOCurrencySymbol;
+
+            switch (currencyName)
+            {
+                case "USD":
+                    price *= 3.99;
+                    break;
+                case "EUR":
+                    price *= 4.38;
+                    break;
+                case "PLN":
+                default:
+                    break;
+
+            }
+            return Math.Round(price, 2);
+        }
+
+        public double GetTotalSum(ObservableCollection<Expense> expenses)
+        {
+            double sum = 0;
+            foreach (var expense in expenses)
+            {
+                sum += ConvertPriceToPLN(expense.Price, expense.Country);
+            }
+            return Math.Round(sum,2);
         }
 
         private void LoadExpenses()

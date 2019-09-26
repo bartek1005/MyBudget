@@ -18,5 +18,6 @@ namespace MyBudget.DAL
         List<ExpenseType> GetExpenseTypes();
         ObservableCollection<Expense> FilterExpenses(IList<Expense> expenses, string searchInput, ExpenseType expenseType);
 
+        double GetTotalSum(ObservableCollection<Expense> expenses);
     }
 }
