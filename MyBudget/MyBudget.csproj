@@ -66,6 +66,8 @@
     </ApplicationDefinition>
     <Compile Include="Converter\CountryFlagConverter.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
+    <Compile Include="Converter\PriceToPLNConverter.cs" />
+    <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ExpenseListViewModel.cs" />
     <Compile Include="View\ExpenseListView.xaml.cs">

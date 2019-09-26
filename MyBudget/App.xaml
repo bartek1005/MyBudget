@@ -9,6 +9,7 @@
             <local:ViewModelLocator x:Key="mainViewModelLocator"/>
             <conv:PriceConverter x:Key="priceConverter"/>
             <conv:CountryFlagConverter x:Key="countryFlagConverter"/>
+            <conv:PriceToPLNConverter x:Key="pricePLNConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <!-- MahApps.Metro resource dictionaries. Make sure that all file names are Case Sensitive! -->
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
