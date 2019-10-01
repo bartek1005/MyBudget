@@ -7,7 +7,7 @@
         xmlns:conv="clr-namespace:MyBudget.Converter"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="ExpenseListView" Height="450" Width="800"
+        Title="ExpenseListView" Height="536.4" Width="800"
         DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=ExpenseListViewModel}">
     <Window.Resources>
         <conv:PriceConverter x:Key="priceConverter"/>
@@ -41,7 +41,16 @@
                       SelectedValue="{Binding SelectedExpenseType}"/>
             <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearTypeFilterCommand}"/>
         </Grid>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20">
+        <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20" Margin="10">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <Binding Path="Price" Converter="{StaticResource colorConverter}"/>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
                 <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
@@ -86,8 +95,9 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Total sum:" HorizontalAlignment="Right" Margin="5"/>
-            <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5"/>
+            <Label Grid.Column="0" Content="Total:" HorizontalAlignment="Right" Margin="5"/>
+            <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
+
         </Grid>
     </Grid>
 </Controls:MetroWindow>

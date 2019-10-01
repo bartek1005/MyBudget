@@ -115,15 +115,14 @@ namespace MyBudget.ViewModel
         {
             allExpenses = expenseRepository.GetExpenses();
             Expenses = new ObservableCollection<Expense>(allExpenses);
-            Sum = expenseRepository.GetTotalSum(Expenses);
+            Sum = expenseRepository.GetTotalSum(Expenses.ToList());
         }
 
         private void FilterExpenses()
         {
             Expenses = expenseRepository.FilterExpenses(allExpenses, searchInput, selectedExpenseType);
-            Sum = expenseRepository.GetTotalSum(Expenses);
+            Sum = expenseRepository.GetTotalSum(Expenses.ToList());
         }
-
         #region ICommand
 
         public void LoadCommands()

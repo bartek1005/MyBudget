@@ -18,6 +18,11 @@ namespace MyBudget.DAL
         List<ExpenseType> GetExpenseTypes();
         ObservableCollection<Expense> FilterExpenses(IList<Expense> expenses, string searchInput, ExpenseType expenseType);
 
-        double GetTotalSum(ObservableCollection<Expense> expenses);
+        #region Math
+        double GetTotalSum(List<Expense> expenses);
+        double GetMaxPrice(List<Expense> expenses);
+        double GetAveragePrice(List<Expense> expenses);
+        double GetAverageRate(List<Expense> expenses);
+        #endregion
     }
 }

@@ -76,37 +76,7 @@ namespace MyBudget.DAL
             throw new NotImplementedException();
         }
 
-        private double ConvertPriceToPLN(double price, Country country)
-        {
-            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.LCID));
-            var currentRegion = regions.FirstOrDefault(region => region.EnglishName.Contains(country.ToString()) || region.ThreeLetterISORegionName.Contains(country.ToString()));
-            string currencyName = currentRegion.ISOCurrencySymbol;
 
-            switch (currencyName)
-            {
-                case "USD":
-                    price *= 3.99;
-                    break;
-                case "EUR":
-                    price *= 4.38;
-                    break;
-                case "PLN":
-                default:
-                    break;
-
-            }
-            return Math.Round(price, 2);
-        }
-
-        public double GetTotalSum(ObservableCollection<Expense> expenses)
-        {
-            double sum = 0;
-            foreach (var expense in expenses)
-            {
-                sum += ConvertPriceToPLN(expense.Price, expense.Country);
-            }
-            return Math.Round(sum,2);
-        }
 
         private void LoadExpenses()
         {
@@ -213,5 +183,56 @@ namespace MyBudget.DAL
                 }
             };
         }
+
+        #region Math
+        public double ConvertPriceToPLN(double price, Country country)
+        {
+            var regions = CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(x => new RegionInfo(x.LCID));
+            var currentRegion = regions.FirstOrDefault(region => region.EnglishName.Contains(country.ToString()) || region.ThreeLetterISORegionName.Contains(country.ToString()));
+            string currencyName = currentRegion.ISOCurrencySymbol;
+
+            switch (currencyName)
+            {
+                case "USD":
+                    price *= 3.99;
+                    break;
+                case "EUR":
+                    price *= 4.38;
+                    break;
+                case "PLN":
+                default:
+                    break;
+
+            }
+            return Math.Round(price, 2);
+        }
+
+        public double GetTotalSum(List<Expense> expenses)
+        {
+            double sum = 0;
+            foreach (var expense in expenses)
+            {
+                sum += ConvertPriceToPLN(expense.Price, expense.Country);
+            }
+            return Math.Round(sum, 2);
+        }
+
+        public double GetMaxPrice(List<Expense> expenses)
+        {
+            return expenses.Max(e => e.Price);
+        }
+
+        public double GetAveragePrice(List<Expense> expenses)
+        {
+            return GetTotalSum(expenses) / expenses.Count;
+        }
+
+        public double GetAverageRate(List<Expense> expenses)
+        {
+            List<int> rates = expenses.Select(s => s.Rate).ToList();
+            return rates.Average();
+        }
+
+        #endregion
     }
 }
