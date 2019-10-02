@@ -19,7 +19,7 @@ namespace MyBudget.View
     /// <summary>
     /// Interaction logic for ExpenseListView.xaml
     /// </summary>
-    public partial class ExpenseListView : MetroWindow
+    public partial class ExpenseListView : Window
     {
         public ExpenseListView()
         {

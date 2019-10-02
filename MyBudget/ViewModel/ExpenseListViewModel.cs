@@ -15,6 +15,11 @@ namespace MyBudget.ViewModel
 {
     public class ExpenseListViewModel : INotifyPropertyChanged
     {
+
+        int _tabControlTopSelectedIndex = 0;
+        System.Windows.Controls.TabItem _selectedTabParent;
+
+
         private List<Expense> allExpenses;
         private ObservableCollection<Expense> expenses;
         private string searchInput;
@@ -26,6 +31,24 @@ namespace MyBudget.ViewModel
         private double sum;
 
         #region Properties
+
+        public int TabControlTopSelectedIndex
+        {
+            get { return _tabControlTopSelectedIndex; }
+            set
+            {
+                _tabControlTopSelectedIndex = value;
+                RaisePropertyChanged("TabControlTopSelectedIndex");
+            }
+        }
+
+        public System.Windows.Controls.TabItem SelectedTabParent
+        {
+            get { return _selectedTabParent; }
+            set { _selectedTabParent = value; }
+        }
+
+
         public CustomCommand ClearFilterCommand { get; private set; }
         public CustomCommand ClearTypeFilterCommand { get; private set; }
 

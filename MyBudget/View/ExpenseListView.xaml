@@ -1,103 +1,180 @@
-﻿<Controls:MetroWindow x:Class="MyBudget.View.ExpenseListView"
+﻿<Window x:Class="MyBudget.View.ExpenseListView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MyBudget.View"
         xmlns:conv="clr-namespace:MyBudget.Converter"
-        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
         Title="ExpenseListView" Height="536.4" Width="800"
         DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=ExpenseListViewModel}">
     <Window.Resources>
         <conv:PriceConverter x:Key="priceConverter"/>
     </Window.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="ProductName:" HorizontalAlignment="Right" Margin="0,0,5,0"/>
-            <TextBox Grid.Column="1" Margin="5" Text="{Binding SearchInput, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearFilterCommand}"/>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="5*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="ProductType" HorizontalAlignment="Right" Margin="0,0,5,0"/>
-            <ComboBox Grid.Column="1" Margin="5"
+    <TabControl Name="tabControlTop" SelectedIndex="{Binding TabControlTopSelectedIndex}" SelectedItem="{Binding SelectedTabParent, Mode=OneWayToSource}" Background="LightGray">
+        <TabControl.Resources>
+            <Style TargetType="TabItem">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TabItem">
+                            <Border Name="Border" BorderThickness="1,1,1,0" CornerRadius="0" BorderBrush="Gray">
+                                <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter TargetName="Border" Property="Background" Value="LightBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="False">
+                                    <Setter TargetName="Border" Property="Background" Value="White"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </TabControl.Resources>
+        <TabItem Name="tabHome">
+            <TabItem.Header>
+                <StackPanel>
+                    <TextBlock Text="FirstTab" Width="50"/>
+                </StackPanel>
+            </TabItem.Header>
+            <Grid Background="White">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="ProductName:" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+                    <TextBox Grid.Column="1" Margin="5" Text="{Binding SearchInput, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearFilterCommand}"/>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="ProductType" HorizontalAlignment="Right" Margin="0,0,5,0"/>
+                    <ComboBox Grid.Column="1" Margin="5"
                       ItemsSource="{Binding ExpenseTypes, Mode=OneWay}" 
                       SelectedValue="{Binding SelectedExpenseType}"/>
-            <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearTypeFilterCommand}"/>
-        </Grid>
-        <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" AutoGenerateColumns="False" IsReadOnly="True" RowHeight="20" Margin="10">
-            <DataGrid.RowStyle>
-                <Style TargetType="DataGridRow">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <Binding Path="Price" Converter="{StaticResource colorConverter}"/>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </DataGrid.RowStyle>
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
-                <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
-                <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*"/>
-                <DataGridTextColumn Header="Price" Width="*">
-                    <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource priceConverter}">
-                            <MultiBinding.Bindings>
-                                <Binding Path="Price"/>
-                                <Binding Path="Country"/>
-                            </MultiBinding.Bindings>
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                    <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearTypeFilterCommand}"/>
+                </Grid>
+                <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" 
+                          AutoGenerateColumns="False" 
+                          IsReadOnly="True" 
+                          RowHeight="20" 
+                          Margin="10" 
+                          AlternationCount="2" 
+                          BorderThickness="1" 
+                          BorderBrush="Black"
+                          SelectionMode="Single">
+                    <DataGrid.CellStyle>
+                        <Style TargetType="DataGridCell">
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="#D5DFE5"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="LimeGreen"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.CellStyle>
+                    <DataGrid.RowStyle>
+                        <Style TargetType="DataGridRow">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <Binding Path="Price" Converter="{StaticResource colorConverter}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="AlternationIndex" Value="0">
+                                    <Setter Property="Background" Value="Gainsboro"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                                <Trigger Property="AlternationIndex" Value="1">
+                                    <Setter Property="Background" Value="Silver"/>
+                                    <Setter Property="Foreground" Value="Black"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                    <DataGrid.ColumnHeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Background" Value="DimGray"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                            <Setter Property="FontSize" Value="14"/>
+                            <Setter Property="BorderThickness" Value="1"/>
+                            <Setter Property="BorderBrush" Value="LightGray"/>
+                        </Style>
+                    </DataGrid.ColumnHeaderStyle>
 
-                <DataGridTextColumn Header="Price in PLN" Width="*">
-                    <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
-                    <DataGridTextColumn.Binding>
-                        <MultiBinding Converter="{StaticResource pricePLNConverter}">
-                            <MultiBinding.Bindings>
-                                <Binding Path="Price"/>
-                                <Binding Path="Country"/>
-                            </MultiBinding.Bindings>
-                        </MultiBinding>
-                    </DataGridTextColumn.Binding>
-                </DataGridTextColumn>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
+                        <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
+                        <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*"/>
+                        <DataGridTextColumn Header="Price" Width="*">
+                            <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource priceConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="Price"/>
+                                        <Binding Path="Country"/>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
-                <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="*"/>
-                <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
-                <DataGridTemplateColumn Header="Flag" IsReadOnly="True" Width="Auto">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Image Source="{Binding Country,Converter={StaticResource countryFlagConverter}}"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
-        </DataGrid>
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Content="Total:" HorizontalAlignment="Right" Margin="5"/>
-            <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Price in PLN" Width="*">
+                            <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
+                            <DataGridTextColumn.Binding>
+                                <MultiBinding Converter="{StaticResource pricePLNConverter}">
+                                    <MultiBinding.Bindings>
+                                        <Binding Path="Price"/>
+                                        <Binding Path="Country"/>
+                                    </MultiBinding.Bindings>
+                                </MultiBinding>
+                            </DataGridTextColumn.Binding>
+                        </DataGridTextColumn>
 
-        </Grid>
-    </Grid>
-</Controls:MetroWindow>
+                        <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="*"/>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
+                        <DataGridTemplateColumn Header="Flag" IsReadOnly="True" Width="Auto">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Country,Converter={StaticResource countryFlagConverter}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Total:" HorizontalAlignment="Right" Margin="5"/>
+                    <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
+
+                </Grid>
+            </Grid>
+        </TabItem>
+        <TabItem Name="tabSecond" >
+            <TabItem.Header>
+                <StackPanel>
+                    <TextBlock Text="SecondTab"/>
+                </StackPanel>
+            </TabItem.Header>
+        </TabItem>
+    </TabControl>
+</Window>
