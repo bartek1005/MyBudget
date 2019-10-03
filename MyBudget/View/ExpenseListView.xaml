@@ -10,6 +10,9 @@
         DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=ExpenseListViewModel}">
     <Window.Resources>
         <conv:PriceConverter x:Key="priceConverter"/>
+        <Style x:Key="RightCellStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+        </Style>
     </Window.Resources>
     <TabControl Name="tabControlTop" SelectedIndex="{Binding TabControlTopSelectedIndex}" SelectedItem="{Binding SelectedTabParent, Mode=OneWayToSource}" Background="LightGray">
         <TabControl.Resources>
@@ -118,13 +121,12 @@
                             <Setter Property="BorderBrush" Value="LightGray"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
-
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="Auto"/>
+                        <DataGridTextColumn Header="Id" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource rowToIndexConverter}}" Width="Auto"/>
                         <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
-                        <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*"/>
-                        <DataGridTextColumn Header="Price" Width="*">
-                            <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
+                        <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*" ElementStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Header="Price" Width="*" ElementStyle="{StaticResource RightCellStyle}">
+                        <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource priceConverter}">
                                     <MultiBinding.Bindings>
@@ -135,7 +137,7 @@
                             </DataGridTextColumn.Binding>
                         </DataGridTextColumn>
 
-                        <DataGridTextColumn Header="Price in PLN" Width="*">
+                        <DataGridTextColumn Header="Price in PLN" Width="*" ElementStyle="{StaticResource RightCellStyle}">
                             <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource pricePLNConverter}">
@@ -148,7 +150,7 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="*"/>
-                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*"/>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" ElementStyle="{StaticResource RightCellStyle}"/>
                         <DataGridTemplateColumn Header="Flag" IsReadOnly="True" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

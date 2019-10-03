@@ -181,7 +181,7 @@ namespace MyBudget.DAL
                     Type = ExpenseType.Food,
                     Rate = 0
                 }
-            };
+            }.OrderBy(d=>d.ExpenseDateTime).ToList();
         }
 
         #region Math

@@ -42,7 +42,7 @@ namespace MyBudget.Converter
                     break;
 
             }
-            return Math.Round(price, 2).ToString() + " zl";
+            return string.Format("{0:F2}",Math.Round(price, 2)) + " zl";
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

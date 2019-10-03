@@ -31,7 +31,7 @@ namespace MyBudget.Converter
             var currentRegion = regions.FirstOrDefault(region => region.EnglishName.Contains(country) || region.ThreeLetterISORegionName.Contains(country));
             string currencySymbol = currentRegion.CurrencySymbol;
 
-            return Math.Round(price,2).ToString() + " " + currencySymbol;
+            return string.Format("{0:F2}",Math.Round(price,2)) + " " + currencySymbol;
         }
 
         public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
