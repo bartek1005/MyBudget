@@ -16,7 +16,7 @@ namespace MyBudget.ViewModel
     public class ExpenseListViewModel : INotifyPropertyChanged
     {
 
-        int _tabControlTopSelectedIndex = 0;
+        private int _tabControlTopSelectedIndex = 0;
         System.Windows.Controls.TabItem _selectedTabParent;
 
 
@@ -25,10 +25,14 @@ namespace MyBudget.ViewModel
         private string searchInput;
         private IExpenseRepository expenseRepository;
 
+        private Expense _expense;
+        private Expense _editExpense;
         private ExpenseType selectedExpenseType;
         public readonly ExpenseType defaultExpenseType = ExpenseType.All;
 
         private double sum;
+
+
 
         #region Properties
 
@@ -45,12 +49,18 @@ namespace MyBudget.ViewModel
         public System.Windows.Controls.TabItem SelectedTabParent
         {
             get { return _selectedTabParent; }
-            set { _selectedTabParent = value; }
+            set
+            {
+                _selectedTabParent = value;
+                RaisePropertyChanged("SelectedTabParent");
+            }
         }
 
 
         public CustomCommand ClearFilterCommand { get; private set; }
         public CustomCommand ClearTypeFilterCommand { get; private set; }
+        public CustomCommand EditExpenseCommand { get; private set; }
+        public CustomCommand UpdateExpenseCommand { get; private set; }
 
         public ExpenseListViewModel()
         {
@@ -69,6 +79,36 @@ namespace MyBudget.ViewModel
             {
                 expenses = value;
                 RaisePropertyChanged("Expenses");
+            }
+        }
+
+        public Expense SelectedExpense
+        {
+            get
+            {
+                return _expense;
+            }
+            set
+            {
+                _expense = value;
+                SetEditedExpense();
+                RaisePropertyChanged("SelectedExpense");
+            }
+        }
+
+        private void SetEditedExpense()
+        {
+              EditedExpense = SelectedExpense;
+          //  EditedExpense.Price = 1;
+        }
+
+        public Expense EditedExpense
+        {
+            get { return _editExpense; }
+            set
+            {
+                _editExpense = value;
+                RaisePropertyChanged("EditedExpense");
             }
         }
 
@@ -152,6 +192,29 @@ namespace MyBudget.ViewModel
         {
             ClearFilterCommand = new CustomCommand(Clear, CanClear);
             ClearTypeFilterCommand = new CustomCommand(ClearType, CanClearType);
+            EditExpenseCommand = new CustomCommand(EditExpense, CanEdit);
+            UpdateExpenseCommand = new CustomCommand(UpdateExpense, CanUpdate);
+        }
+
+        private void UpdateExpense(object obj)
+        {
+            expenseRepository.UpdateExpense(EditedExpense);
+            LoadData();
+        }
+
+        private bool CanUpdate(object obj)
+        {
+            return true;
+        }
+
+        private void EditExpense(object obj)
+        {
+            TabControlTopSelectedIndex = 1;
+        }
+
+        private bool CanEdit(object obj)
+        {
+            return SelectedExpense != null ? true : false;
         }
 
         private void ClearType(object obj) => SelectedExpenseType = defaultExpenseType;
@@ -170,6 +233,8 @@ namespace MyBudget.ViewModel
             return true;
         }
         private void Clear(object obj) => SearchInput = null;
+
+
         #endregion
 
 

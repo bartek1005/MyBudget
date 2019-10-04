@@ -12,6 +12,11 @@
         <conv:PriceConverter x:Key="priceConverter"/>
         <Style x:Key="RightCellStyle" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+        </Style>
+        <Style x:Key="CenterCellStyle" TargetType="{x:Type TextBlock}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
     <TabControl Name="tabControlTop" SelectedIndex="{Binding TabControlTopSelectedIndex}" SelectedItem="{Binding SelectedTabParent, Mode=OneWayToSource}" Background="LightGray">
@@ -71,7 +76,8 @@
                       SelectedValue="{Binding SelectedExpenseType}"/>
                     <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearTypeFilterCommand}"/>
                 </Grid>
-                <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}" 
+                <DataGrid Grid.Row="2" ItemsSource="{Binding Expenses}"
+                          SelectedItem="{Binding SelectedExpense}"
                           AutoGenerateColumns="False" 
                           IsReadOnly="True" 
                           RowHeight="20" 
@@ -119,6 +125,7 @@
                             <Setter Property="FontSize" Value="14"/>
                             <Setter Property="BorderThickness" Value="1"/>
                             <Setter Property="BorderBrush" Value="LightGray"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </DataGrid.ColumnHeaderStyle>
                     <DataGrid.Columns>
@@ -150,7 +157,7 @@
                         </DataGridTextColumn>
 
                         <DataGridTextColumn Header="Rate" Binding="{Binding Rate}" Width="*"/>
-                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" ElementStyle="{StaticResource RightCellStyle}"/>
+                        <DataGridTextColumn Header="Country" Binding="{Binding Country}" Width="*" ElementStyle="{StaticResource CenterCellStyle}"/>
                         <DataGridTemplateColumn Header="Flag" IsReadOnly="True" Width="Auto">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -169,6 +176,7 @@
                     <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
 
                 </Grid>
+                <Button Grid.Row="4" Height="50" Width="100" Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
             </Grid>
         </TabItem>
         <TabItem Name="tabSecond" >
@@ -177,6 +185,21 @@
                     <TextBlock Text="SecondTab"/>
                 </StackPanel>
             </TabItem.Header>
+            <Grid Background="LimeGreen">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel>
+                    <TextBox Text="{Binding EditedExpense.ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Content="SAVE" Command="{Binding UpdateExpenseCommand}"/>
+                </StackPanel>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>

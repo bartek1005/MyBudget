@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace MyBudget.Model
 {
-    public class Expense
+    public class Expense : INotifyPropertyChanged
     {
         private static List<bool> counter = new List<bool>();
         private static readonly int MAX_RATES = 5;
         private static readonly int MIN_RATES = 1;
         private int rate;
+
+        private string _productName;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public Expense()
         {
@@ -19,6 +24,17 @@ namespace MyBudget.Model
         public int Id { get; private set; }
         public DateTime ExpenseDateTime { get; set; }
         public string ProductName { get; set; }
+        //{
+        //    get { return _productName; }
+        //    set { _productName = value; RaisePropertyChanged("ProductName"); }
+        //}
+
+        private void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public double Price { get; set; }
         public ExpenseType Type { get; set; }
         public int Rate
@@ -52,9 +68,9 @@ namespace MyBudget.Model
                 }
             }
 
-            if(id == 0)
+            if (id == 0)
             {
-                id = counter.Count+1;
+                id = counter.Count + 1;
                 counter.Add(true);
             }
 

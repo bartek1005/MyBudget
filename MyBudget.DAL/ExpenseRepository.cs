@@ -73,7 +73,8 @@ namespace MyBudget.DAL
 
         public void UpdateExpense(Expense expense)
         {
-            throw new NotImplementedException();
+            Expense exp = expenses.Where(e => e.Id == expense.Id).FirstOrDefault();
+            exp = expense;
         }
 
 
