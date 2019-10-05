@@ -18,6 +18,9 @@ namespace MyBudget.DAL
         List<ExpenseType> GetExpenseTypes();
         ObservableCollection<Expense> FilterExpenses(IList<Expense> expenses, string searchInput, ExpenseType expenseType);
 
+        #region Country
+        List<Country> GetCountries();
+        #endregion
         #region Math
         double GetTotalSum(List<Expense> expenses);
         double GetMaxPrice(List<Expense> expenses);

@@ -72,7 +72,7 @@
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="ProductType" HorizontalAlignment="Right" Margin="0,0,5,0"/>
                     <ComboBox Grid.Column="1" Margin="5"
-                      ItemsSource="{Binding ExpenseTypes, Mode=OneWay}" 
+                      ItemsSource="{Binding ExpenseTypes, Mode=OneWay}"
                       SelectedValue="{Binding SelectedExpenseType}"/>
                     <Button Grid.Column="2" Margin="40,5" Content="Clear" Command="{Binding ClearTypeFilterCommand}"/>
                 </Grid>
@@ -133,7 +133,7 @@
                         <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
                         <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*" ElementStyle="{StaticResource RightCellStyle}"/>
                         <DataGridTextColumn Header="Price" Width="*" ElementStyle="{StaticResource RightCellStyle}">
-                        <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
+                            <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
                             <DataGridTextColumn.Binding>
                                 <MultiBinding Converter="{StaticResource priceConverter}">
                                     <MultiBinding.Bindings>
@@ -176,7 +176,7 @@
                     <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
 
                 </Grid>
-                <Button Grid.Row="4" Height="50" Width="100" Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
+                <Button Grid.Row="4" Margin="20,5" Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
             </Grid>
         </TabItem>
         <TabItem Name="tabSecond" >
@@ -185,20 +185,33 @@
                     <TextBlock Text="SecondTab"/>
                 </StackPanel>
             </TabItem.Header>
-            <Grid Background="LimeGreen">
+            <Grid Background="YellowGreen">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="3*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
-                <StackPanel>
-                    <TextBox Text="{Binding EditedExpense.ProductName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Content="SAVE" Command="{Binding UpdateExpenseCommand}"/>
-                </StackPanel>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Content="ProductName:" Grid.Row="1" Margin="10"/>
+                <Label Content="Price:" Grid.Row="2" Margin="10"/>
+                <Label Content="Expense date:" Grid.Row="3" Margin="10"/>
+                <Label Content="Expense type:" Grid.Row="4" Margin="10"/>
+                <Label Content="Country:" Grid.Row="5" Margin="10,0,10,0"/>
+
+                <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding EditedExpense.ProductName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" BorderBrush="Black" BorderThickness="2"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EditedExpense.Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" />
+                <DatePicker  Grid.Row="3" Grid.Column="1" SelectedDate="{Binding EditedExpense.ExpenseDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" />
+                <ComboBox  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ExpenseTypes}" SelectedItem="{Binding EditedExpense.Type, UpdateSourceTrigger=LostFocus}" Margin="5" />
+                <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding CountryList}" SelectedItem="{Binding EditedExpense.Country, UpdateSourceTrigger=LostFocus}" Margin="5" />
+                <Button  Grid.Row="6" Grid.Column="1" Content="SAVE" Command="{Binding UpdateExpenseCommand}" Margin="5"/>
             </Grid>
         </TabItem>
     </TabControl>

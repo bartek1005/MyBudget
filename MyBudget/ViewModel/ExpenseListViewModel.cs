@@ -29,6 +29,7 @@ namespace MyBudget.ViewModel
         private Expense _editExpense;
         private ExpenseType selectedExpenseType;
         public readonly ExpenseType defaultExpenseType = ExpenseType.All;
+        private List<Country> _countryList;
 
         private double sum;
 
@@ -42,6 +43,7 @@ namespace MyBudget.ViewModel
             set
             {
                 _tabControlTopSelectedIndex = value;
+                SetEditedExpense();
                 RaisePropertyChanged("TabControlTopSelectedIndex");
             }
         }
@@ -130,8 +132,6 @@ namespace MyBudget.ViewModel
             get
             {
                 IList<ExpenseType> exp = expenses.Select(t => t.Type).Distinct().ToList();
-                if (!exp.Contains(defaultExpenseType))
-                    exp.Add(defaultExpenseType);
                 return new ObservableCollection<ExpenseType>(exp.OrderBy(s => s.ToString()));
             }
         }
@@ -163,6 +163,11 @@ namespace MyBudget.ViewModel
             }
         }
 
+        public List<Country> CountryList
+        {
+            get{ return _countryList; }
+        }
+
         #endregion
 
 
@@ -177,6 +182,7 @@ namespace MyBudget.ViewModel
         private void LoadData()
         {
             allExpenses = expenseRepository.GetExpenses();
+            _countryList = expenseRepository.GetCountries();
             Expenses = new ObservableCollection<Expense>(allExpenses);
             Sum = expenseRepository.GetTotalSum(Expenses.ToList());
         }
@@ -200,6 +206,7 @@ namespace MyBudget.ViewModel
         {
             expenseRepository.UpdateExpense(EditedExpense);
             LoadData();
+            TabControlTopSelectedIndex = 0;
         }
 
         private bool CanUpdate(object obj)

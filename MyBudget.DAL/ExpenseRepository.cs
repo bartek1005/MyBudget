@@ -32,6 +32,7 @@ namespace MyBudget.DAL
             if (selectedExpenseType != ExpenseType.All)
                 Expenses = new ObservableCollection<Expense>(Expenses.Where(e => e.Type == selectedExpenseType));
 
+
             if (!string.IsNullOrWhiteSpace(searchInput))
                 Expenses = new ObservableCollection<Expense>(Expenses.Where(e => e.ProductName.ToLower().Contains(searchInput.ToLower())));
 
@@ -42,7 +43,7 @@ namespace MyBudget.DAL
         {
             if (expenses == null)
                 LoadExpenses();
-            return expenses;
+            return expenses.OrderBy(e => e.ExpenseDateTime).ToList();
         }
 
         public List<Expense> GetExpensesByCountry(string countryName)
@@ -73,8 +74,15 @@ namespace MyBudget.DAL
 
         public void UpdateExpense(Expense expense)
         {
-            Expense exp = expenses.Where(e => e.Id == expense.Id).FirstOrDefault();
-            exp = expense;
+            List<int> expensesIds = expenses.Select(e => e.Id).ToList();
+            if (expense != null)
+            {
+                if (expensesIds.Contains(expense.Id))
+                {
+                    Expense exp = expenses.Where(e => e.Id == expense.Id).FirstOrDefault();
+                    exp = expense;
+                }
+            }
         }
 
 
@@ -182,7 +190,7 @@ namespace MyBudget.DAL
                     Type = ExpenseType.Food,
                     Rate = 0
                 }
-            }.OrderBy(d=>d.ExpenseDateTime).ToList();
+            }.OrderBy(d => d.ExpenseDateTime).ToList();
         }
 
         #region Math
@@ -234,6 +242,14 @@ namespace MyBudget.DAL
             return rates.Average();
         }
 
+        #endregion
+
+        #region Country
+
+        public List<Country> GetCountries()
+        {
+            return Enum.GetValues(typeof(Country)).Cast<Country>().ToList();
+        }
         #endregion
     }
 }
