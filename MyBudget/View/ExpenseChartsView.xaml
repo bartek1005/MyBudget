@@ -9,8 +9,14 @@
         Title="ExpenseChartsViewModel" Height="450" Width="800"
         DataContext="{Binding Source={StaticResource mainViewModelLocator}, Path=ExpenseChartsViewModel}">
     <Grid>
-        <charts:Chart Title="Expenses">
-            <charts:ColumnSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding ExpensesGroupedByDate}"/>
+        <charts:Chart Title="Expenses" Background="SkyBlue" Foreground="Black">
+            <charts:ColumnSeries DependentValuePath="Value" IndependentValuePath="Key" ItemsSource="{Binding ExpensesGroupedByDate}">
+                <charts:ColumnSeries.DataPointStyle>
+                    <Style TargetType="charts:ColumnDataPoint">
+                        <Setter Property="Background" Value="Red"/>
+                    </Style>
+                </charts:ColumnSeries.DataPointStyle>
+            </charts:ColumnSeries>
         </charts:Chart>
     </Grid>
 </Window>

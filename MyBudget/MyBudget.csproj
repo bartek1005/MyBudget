@@ -70,6 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\CountryFlagConverter.cs" />
+    <Compile Include="Converter\DateTimeConverter.cs" />
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="Converter\PriceToPLNConverter.cs" />
     <Compile Include="Converter\RowToIndexConverter.cs" />

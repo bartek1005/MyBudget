@@ -130,7 +130,7 @@
                     </DataGrid.ColumnHeaderStyle>
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Id" Binding="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Converter={StaticResource rowToIndexConverter}}" Width="Auto"/>
-                        <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime}" Width="*"/>
+                        <DataGridTextColumn Header="DateTime" Binding="{Binding ExpenseDateTime, Converter={StaticResource dateTimeConverter}}" Width="*"/>
                         <DataGridTextColumn Header="ProductName" Binding="{Binding ProductName}" Width="*" ElementStyle="{StaticResource RightCellStyle}"/>
                         <DataGridTextColumn Header="Price" Width="*" ElementStyle="{StaticResource RightCellStyle}">
                             <!--Binding="{Binding Price, Converter={StaticResource priceConverter}, ConverterParameter={}"-->
