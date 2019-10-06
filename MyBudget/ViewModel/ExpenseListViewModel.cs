@@ -1,5 +1,6 @@
 ﻿using MyBudget.DAL;
 using MyBudget.Model;
+using MyBudget.Services;
 using MyBudget.Utility;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,7 @@ namespace MyBudget.ViewModel
         private ObservableCollection<Expense> expenses;
         private string searchInput;
         private IExpenseRepository expenseRepository;
+        private DialogService dialogService = new DialogService();
 
         private Expense _expense;
         private Expense _editExpense;
@@ -63,6 +65,7 @@ namespace MyBudget.ViewModel
         public CustomCommand ClearTypeFilterCommand { get; private set; }
         public CustomCommand EditExpenseCommand { get; private set; }
         public CustomCommand UpdateExpenseCommand { get; private set; }
+        public CustomCommand OpenNewWindowCommand { get; private set; }
 
         public ExpenseListViewModel()
         {
@@ -200,7 +203,10 @@ namespace MyBudget.ViewModel
             ClearTypeFilterCommand = new CustomCommand(ClearType, CanClearType);
             EditExpenseCommand = new CustomCommand(EditExpense, CanEdit);
             UpdateExpenseCommand = new CustomCommand(UpdateExpense, CanUpdate);
+            OpenNewWindowCommand = new CustomCommand(OpenNewWindow, CanOpenNewWindow);
         }
+
+       
 
         private void UpdateExpense(object obj)
         {
@@ -241,6 +247,19 @@ namespace MyBudget.ViewModel
         }
         private void Clear(object obj) => SearchInput = null;
 
+
+        #endregion
+        #region Navigation
+
+        private void OpenNewWindow(object obj)
+        {
+            dialogService.ShowCharts();
+        }
+
+        private bool CanOpenNewWindow(object obj)
+        {
+            return true;
+        }
 
         #endregion
 

@@ -9,12 +9,20 @@ namespace MyBudget
 {
     public class ViewModelLocator
     {
-        private static ExpenseListViewModel expenseListViewModel = new ExpenseListViewModel();
+        private static ExpenseListViewModel _expenseListViewModel = new ExpenseListViewModel();
+        private static ExpenseChartsViewModel _expenseChartsViewModel = new ExpenseChartsViewModel();
         public static ExpenseListViewModel ExpenseListViewModel
         {
             get
             {
-                return expenseListViewModel;
+                return _expenseListViewModel;
+            }
+        }
+        public static ExpenseChartsViewModel ExpenseChartsViewModel
+        {
+            get
+            {
+                return _expenseChartsViewModel;
             }
         }
     }

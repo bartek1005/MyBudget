@@ -176,7 +176,10 @@
                     <Label Grid.Column="1" Content="{Binding Sum}" HorizontalAlignment="Left" Margin="5" FontSize="16" FontWeight="Bold"/>
 
                 </Grid>
-                <Button Grid.Row="4" Margin="20,5" Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
+                <StackPanel Grid.Row="4" Margin="20,10">
+                    <Button Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
+                    <Button Content="Charts" Command="{Binding OpenNewWindowCommand}" CommandParameter="TEST"/>
+                </StackPanel>
             </Grid>
         </TabItem>
         <TabItem Name="tabSecond" >
@@ -207,7 +210,7 @@
                 <Label Content="Country:" Grid.Row="5" Margin="10,0,10,0"/>
 
                 <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding EditedExpense.ProductName, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" BorderBrush="Black" BorderThickness="2"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EditedExpense.Price, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" />
+                <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EditedExpense.Price, StringFormat=F2, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" />
                 <DatePicker  Grid.Row="3" Grid.Column="1" SelectedDate="{Binding EditedExpense.ExpenseDateTime, Mode=TwoWay, UpdateSourceTrigger=LostFocus}" Margin="5" />
                 <ComboBox  Grid.Row="4" Grid.Column="1" ItemsSource="{Binding ExpenseTypes}" SelectedItem="{Binding EditedExpense.Type, UpdateSourceTrigger=LostFocus}" Margin="5" />
                 <ComboBox Grid.Row="5" Grid.Column="1" ItemsSource="{Binding CountryList}" SelectedItem="{Binding EditedExpense.Country, UpdateSourceTrigger=LostFocus}" Margin="5" />
