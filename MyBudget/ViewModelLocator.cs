@@ -10,7 +10,7 @@ namespace MyBudget
     public class ViewModelLocator
     {
         private static ExpenseListViewModel _expenseListViewModel = new ExpenseListViewModel();
-        private static ExpenseChartsViewModel _expenseChartsViewModel = new ExpenseChartsViewModel();
+        private static ExpenseChartsViewModel expenseChartsViewModel = new ExpenseChartsViewModel();
         public static ExpenseListViewModel ExpenseListViewModel
         {
             get
@@ -22,7 +22,7 @@ namespace MyBudget
         {
             get
             {
-                return _expenseChartsViewModel;
+                return expenseChartsViewModel;
             }
         }
     }
