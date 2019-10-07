@@ -75,12 +75,20 @@
     <Compile Include="Converter\PriceToPLNConverter.cs" />
     <Compile Include="Converter\RowToIndexConverter.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="ViewModel\ExpenseAllViewModel.cs" />
+    <Compile Include="ViewModel\ExpenseDetailViewModel.cs" />
+    <Compile Include="View\ExpenseAllView.xaml.cs">
+      <DependentUpon>ExpenseAllView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\CustomCommand.cs" />
     <Compile Include="ViewModelLocator.cs" />
     <Compile Include="ViewModel\ExpenseChartsViewModel.cs" />
     <Compile Include="ViewModel\ExpenseListViewModel.cs" />
     <Compile Include="View\ExpenseChartsView.xaml.cs">
       <DependentUpon>ExpenseChartsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExpenseDetailView.xaml.cs">
+      <DependentUpon>ExpenseDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ExpenseListView.xaml.cs">
       <DependentUpon>ExpenseListView.xaml</DependentUpon>
@@ -97,7 +105,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\ExpenseAllView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\ExpenseChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ExpenseDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,5 +164,6 @@
     <Resource Include="Images\Slovakia.png" />
     <Resource Include="Images\USA.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

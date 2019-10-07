@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:MyBudget"
              xmlns:conv="clr-namespace:MyBudget.Converter"
-             StartupUri="View/ExpenseListView.xaml">
+             StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
-            <local:ViewModelLocator x:Key="mainViewModelLocator"/>
+            <!--<local:ViewModelLocator x:Key="mainViewModelLocator"/>-->
             <conv:PriceConverter x:Key="priceConverter"/>
             <conv:CountryFlagConverter x:Key="countryFlagConverter"/>
             <conv:PriceToPLNConverter x:Key="pricePLNConverter"/>
