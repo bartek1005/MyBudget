@@ -74,6 +74,7 @@
     <Compile Include="Converter\PriceConverter.cs" />
     <Compile Include="Converter\PriceToPLNConverter.cs" />
     <Compile Include="Converter\RowToIndexConverter.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModel\ExpenseAllViewModel.cs" />
     <Compile Include="ViewModel\ExpenseDetailViewModel.cs" />
