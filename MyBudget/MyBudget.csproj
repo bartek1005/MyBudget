@@ -68,6 +68,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BindableBase.cs" />
     <Compile Include="Converter\ColorConverter.cs" />
     <Compile Include="Converter\CountryFlagConverter.cs" />
     <Compile Include="Converter\DateTimeConverter.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Converter\PriceToPLNConverter.cs" />
     <Compile Include="Converter\RowToIndexConverter.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="RelayCommand.cs" />
     <Compile Include="Services\DialogService.cs" />
     <Compile Include="ViewModel\ExpenseAllViewModel.cs" />
     <Compile Include="ViewModel\ExpenseDetailViewModel.cs" />
