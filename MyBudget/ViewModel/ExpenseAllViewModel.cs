@@ -19,9 +19,19 @@ namespace MyBudget.ViewModel
             _repository = new ExpenseRepository();
             _allExpenses = _repository.GetExpenses();
             Expenses = new ObservableCollection<Expense>(_allExpenses);
+            EditCommand = new RelayCommand(OnEdit, CanEdit);
         }
 
         #region Properties
+
+        private int _tabControlSelectedIndex;
+
+        public int TabControlSelectedIndex
+        {
+            get { return _tabControlSelectedIndex; }
+            set { SetProperty(ref _tabControlSelectedIndex, value); }
+        }
+
         private ObservableCollection<Expense> _expenses;
         public ObservableCollection<Expense> Expenses
         {
@@ -34,7 +44,11 @@ namespace MyBudget.ViewModel
         public Expense SelectedExpense
         {
             get { return _selectedExpense; }
-            set { SetProperty(ref _selectedExpense, value); }
+            set
+            {
+                SetProperty(ref _selectedExpense, value);
+                EditCommand.RaiseCanExecuteChanged();
+            }
         }
 
         private ExpenseType _selectedExpenseType;
@@ -56,6 +70,20 @@ namespace MyBudget.ViewModel
                 SetProperty(ref _searchInput, value);
                 FilterExpenses();
             }
+        }
+
+        public RelayCommand EditCommand { get; private set; }
+        #endregion
+
+        #region Commands
+        private void OnEdit()
+        {
+            TabControlSelectedIndex = 1;
+        }
+
+        private bool CanEdit()
+        {
+            return SelectedExpense != null;
         }
         #endregion
 
