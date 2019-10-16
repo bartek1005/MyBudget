@@ -19,7 +19,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
     </Window.Resources>
-    <TabControl Name="tabControlTop" SelectedIndex="{Binding TabControlTopSelectedIndex}" SelectedItem="{Binding SelectedTabParent, Mode=OneWayToSource}" Background="LightGray">
+    <TabControl Name="tabControlTop" SelectedIndex="{Binding TabControlTopSelectedIndex}"  Background="LightGray">
         <TabControl.Resources>
             <Style TargetType="TabItem">
                 <Setter Property="Template">
@@ -178,6 +178,7 @@
                 </Grid>
                 <StackPanel Grid.Row="4" Margin="20,10">
                     <Button Content="EDIT" Command="{Binding EditExpenseCommand}" CommandParameter="{Binding}"/>
+                    <Button Content="Add Expense" Command="{Binding AddExpenseCommand}"/>
                     <Button Content="Charts" Command="{Binding OpenNewWindowCommand}" CommandParameter="TEST"/>
                 </StackPanel>
             </Grid>

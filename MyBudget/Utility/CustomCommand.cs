@@ -23,7 +23,10 @@ namespace MyBudget.Utility
             }
         }
 
-
+        public CustomCommand(Action<object> execute)
+        {
+            this.execute = execute;
+        }
         public CustomCommand(Action<object> execute, Predicate<object> canExecute)
         {
             this.execute = execute;

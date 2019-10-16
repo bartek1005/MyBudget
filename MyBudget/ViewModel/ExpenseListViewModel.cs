@@ -18,7 +18,6 @@ namespace MyBudget.ViewModel
     {
 
         private int _tabControlTopSelectedIndex = 0;
-        System.Windows.Controls.TabItem _selectedTabParent;
 
 
         private List<Expense> allExpenses;
@@ -50,22 +49,13 @@ namespace MyBudget.ViewModel
             }
         }
 
-        public System.Windows.Controls.TabItem SelectedTabParent
-        {
-            get { return _selectedTabParent; }
-            set
-            {
-                _selectedTabParent = value;
-                RaisePropertyChanged("SelectedTabParent");
-            }
-        }
-
 
         public CustomCommand ClearFilterCommand { get; private set; }
         public CustomCommand ClearTypeFilterCommand { get; private set; }
         public CustomCommand EditExpenseCommand { get; private set; }
         public CustomCommand UpdateExpenseCommand { get; private set; }
         public CustomCommand OpenNewWindowCommand { get; private set; }
+        public CustomCommand AddExpenseCommand { get; private set; }
 
         public ExpenseListViewModel()
         {
@@ -204,9 +194,15 @@ namespace MyBudget.ViewModel
             EditExpenseCommand = new CustomCommand(EditExpense, CanEdit);
             UpdateExpenseCommand = new CustomCommand(UpdateExpense, CanUpdate);
             OpenNewWindowCommand = new CustomCommand(OpenNewWindow, CanOpenNewWindow);
+            AddExpenseCommand = new CustomCommand(OnAdd);
         }
 
-       
+        private void OnAdd(object obj)
+        {
+            Expense newExpense = new Expense();
+            SelectedExpense = newExpense;
+            TabControlTopSelectedIndex = 1;
+        }
 
         private void UpdateExpense(object obj)
         {

@@ -82,6 +82,8 @@ namespace MyBudget.DAL
                     Expense exp = expenses.Where(e => e.Id == expense.Id).FirstOrDefault();
                     exp = expense;
                 }
+                else
+                    expenses.Add(expense);
             }
         }
 
